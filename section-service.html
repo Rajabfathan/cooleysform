@@ -1,0 +1,1067 @@
+<!--<!DOCTYPE html> -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repair or Replace</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #111111;
+      --muted: #5a5a5a;
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --border: #d7d7d7;
+      --accent: #111111;
+      --success: #1c6b3e;
+      --error: #b3261e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.01em;
+      color: #000000;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .intro {
+      max-width: 680px;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    form {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem 1.25rem;
+      background: var(--panel);
+    }
+
+    legend {
+      font-weight: 700;
+      padding: 0 0.25rem;
+      font-size: 1rem;
+      color: #000000;
+    }
+
+    .options {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.85rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .option input {
+      margin-top: 0.2rem;
+    }
+
+    .error {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--error);
+      display: none;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #000000;
+      margin: 0.25rem 0 -0.25rem;
+    }
+
+    .learnmore {
+      margin-top: 1rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .learnmore__toggle {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0.65rem 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #111111;
+      font-family: inherit;
+    }
+
+    .learnmore__icon {
+      width: 18px;
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .learnmore__panel {
+      border: 1px solid var(--border);
+      border-top: 0;
+      padding: 1rem;
+      background: #ffffff;
+    }
+
+    .learnmore__title {
+      margin: 0 0 0.35rem;
+      text-align: center;
+      font-size: 1.05rem;
+      color: #000000;
+    }
+
+    .learnmore__subtitle {
+      margin: 0.35rem 0 0;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .learnmore__desc {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .learnmore__desc.center {
+      text-align: center;
+    }
+
+    .learnmore__grid {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+    }
+
+    .learnmore__grid--three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .learnmore__grid--two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .learnmore__tile {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #222222;
+    }
+
+    .learnmore__tile img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 0.35rem;
+      background: #f7f7f7;
+    }
+
+    .learnmore__vs {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0.9rem 0 0.75rem;
+    }
+
+    .learnmore__vs img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #f7f7f7;
+    }
+
+    .learnmore__vs-text {
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .learnmore__center-img {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      height: 180px;
+      object-fit: cover;
+      margin: 0.6rem auto 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #f7f7f7;
+    }
+
+    .learnmore__emphasis {
+      margin: 0.6rem 0 0;
+      font-weight: 700;
+      color: #111111;
+    }
+
+    .learnmore__list {
+      margin: 0.5rem 0 0 1.1rem;
+      padding: 0;
+      color: #222222;
+      line-height: 1.6;
+    }
+
+    .learnmore__note {
+      margin: 0.6rem 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .primary {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+    }
+
+    .secondary {
+      background: #ffffff;
+    }
+
+    .result-card {
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .result-card.show {
+      display: block;
+    }
+
+    .result-card h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    .result-body {
+      margin-bottom: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .result-meta {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .learnmore__grid--three {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      main {
+        padding: 2rem 1rem 2.5rem;
+      }
+
+      fieldset {
+        padding: 1rem 1rem 1.1rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .learnmore__grid--three,
+      .learnmore__grid--two {
+        grid-template-columns: 1fr;
+      }
+
+      .learnmore__vs {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .learnmore__vs-text {
+        padding: 0.4rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Repair or Replace</h1>
+      <p class="intro">Answer a few quick questions about your HVAC system. We'll recommend whether a repair or replacement is likely the better fit based on age, efficiency, repair cost, and performance.</p>
+    </header>
+
+    <form id="questionnaire" novalidate>
+      <fieldset data-question="system_type">
+        <legend>What type of equipment are you repairing?</legend>
+        <div class="options">
+          <label class="option" for="system-ac-heat"><input type="radio" id="system-ac-heat" name="system_type" value="ac_heat_pump">Air Conditioner or Heat Pump</label>
+          <label class="option" for="system-furnace"><input type="radio" id="system-furnace" name="system_type" value="furnace_boiler">Furnace or Boiler</label>
+          <label class="option" for="system-packaged"><input type="radio" id="system-packaged" name="system_type" value="packaged_unit">Gas/Electric Packaged Unit</label>
+        </div>
+        <p class="error" data-error="system_type">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Existing System</h3>
+          <p class="learnmore__desc center">Identify your current equipment to compare repair paths and replacement options.</p>
+          <div class="learnmore__grid learnmore__grid--three">
+            <div class="learnmore__tile">
+              <img src="/assets/air-conditioner.jpg" alt="Air Conditioner">
+              <div>Air Conditioner</div>
+            </div>
+            <div class="learnmore__tile">
+              <img src="/assets/heat-pump.jpg" alt="Heat Pump">
+              <div>Heat Pump</div>
+            </div>
+            <div class="learnmore__tile">
+              <img src="/assets/furnace.jpg" alt="Furnace">
+              <div>Furnace</div>
+            </div>
+          </div>
+          <div class="learnmore__grid learnmore__grid--two">
+            <div class="learnmore__tile">
+              <img src="/assets/boiler.jpg" alt="Boiler">
+              <div>Boiler</div>
+            </div>
+            <div class="learnmore__tile">
+              <img src="/assets/packaged-system.jpg" alt="Packaged System">
+              <div>Packaged System</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="equipment_age_years_bucket">
+        <legend>What is the age of your equipment?</legend>
+        <div class="options">
+          <label class="option" for="age-lt6"><input type="radio" id="age-lt6" name="equipment_age_years_bucket" value="lt_6">Less than 6 Years</label>
+          <label class="option" for="age-6-10"><input type="radio" id="age-6-10" name="equipment_age_years_bucket" value="6_10">6-10 Years</label>
+          <label class="option" for="age-11-20"><input type="radio" id="age-11-20" name="equipment_age_years_bucket" value="11_20">11-20 Years</label>
+          <label class="option" for="age-gt20"><input type="radio" id="age-gt20" name="equipment_age_years_bucket" value="gt_20">Over 20 Years</label>
+          <label class="option" for="age-unknown"><input type="radio" id="age-unknown" name="equipment_age_years_bucket" value="unknown">Do not Know</label>
+        </div>
+        <p class="error" data-error="equipment_age_years_bucket">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Equipment Age and Life Expectancy</h3>
+          <p class="learnmore__subtitle">Most equipment is designed for a life expectancy of 15 to 20 years.</p>
+          <div class="learnmore__vs">
+            <img src="/assets/old-unit.jpg" alt="Older unit">
+            <span class="learnmore__vs-text">VS</span>
+            <img src="/assets/new-unit.jpg" alt="Newer unit">
+          </div>
+          <p class="learnmore__emphasis">Older equipment is prone to the following:</p>
+          <ul class="learnmore__list">
+            <li>More expensive repairs, such as compressors or heat exchangers</li>
+            <li>Much lower energy efficiency vs. today's standards</li>
+            <li>Reduced performance due to clogged or corroding coils</li>
+          </ul>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="repair_cost_bucket">
+        <legend>What is the estimated cost of needed repairs?</legend>
+        <div class="options">
+          <label class="option" for="cost-lt100"><input type="radio" id="cost-lt100" name="repair_cost_bucket" value="lt_100">Less than $100</label>
+          <label class="option" for="cost-100-500"><input type="radio" id="cost-100-500" name="repair_cost_bucket" value="100_500">$100 - $500</label>
+          <label class="option" for="cost-501-1000"><input type="radio" id="cost-501-1000" name="repair_cost_bucket" value="501_1000">$501 - $1000</label>
+          <label class="option" for="cost-gt1000"><input type="radio" id="cost-gt1000" name="repair_cost_bucket" value="gt_1000">Over $1000</label>
+        </div>
+        <p class="error" data-error="repair_cost_bucket">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Equipment Repair</h3>
+          <img class="learnmore__center-img" src="/assets/equipment-repair.jpg" alt="Equipment repair">
+          <p class="learnmore__emphasis">Repairing existing equipment can be a good decision as long as:</p>
+          <ul class="learnmore__list">
+            <li>The cost of the repair is less than 30% of the cost of new equipment</li>
+            <li>The rest of the system is in excellent operating condition</li>
+          </ul>
+          <p class="learnmore__note">Otherwise, the cost of the repair would be better invested in a new system.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="under_warranty">
+        <legend>Is the equipment still under warranty?</legend>
+        <div class="options">
+          <label class="option" for="warranty-yes"><input type="radio" id="warranty-yes" name="under_warranty" value="true">Yes</label>
+          <label class="option" for="warranty-no"><input type="radio" id="warranty-no" name="under_warranty" value="false">No</label>
+        </div>
+        <p class="error" data-error="under_warranty">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Warranty Coverage</h3>
+          <p class="learnmore__desc">Warranty coverage can lower repair costs and make a repair more attractive if the system is otherwise healthy.</p>
+        </div>
+      </fieldset>
+
+      <div class="section-title" id="cooling-section-title">Cooling System Details</div>
+
+      <fieldset data-question="seer_bucket" data-conditional="cooling">
+        <legend>What is the SEER efficiency rating of your equipment?</legend>
+        <div class="options">
+          <label class="option" for="seer-14"><input type="radio" id="seer-14" name="seer_bucket" value="ge_14">14 and over</label>
+          <label class="option" for="seer-11-13"><input type="radio" id="seer-11-13" name="seer_bucket" value="11_13">11 - 13</label>
+          <label class="option" for="seer-8-10"><input type="radio" id="seer-8-10" name="seer_bucket" value="8_10">8 - 10</label>
+          <label class="option" for="seer-5-7"><input type="radio" id="seer-5-7" name="seer_bucket" value="5_7">5 - 7</label>
+        </div>
+        <p class="error" data-error="seer_bucket">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Seasonal Energy Efficiency Ratio</h3>
+          <p class="learnmore__desc">The Seasonal Energy Efficiency Ratio (SEER) is an energy efficiency rating for air conditioners. The higher the SEER, the better the energy performance, the more you save.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="refrigerant_type" data-conditional="cooling">
+        <legend>Type of refrigerant used?</legend>
+        <div class="options">
+          <label class="option" for="ref-454b"><input type="radio" id="ref-454b" name="refrigerant_type" value="r_454b">R-454b</label>
+          <label class="option" for="ref-32"><input type="radio" id="ref-32" name="refrigerant_type" value="r_32">R-32</label>
+          <label class="option" for="ref-puron"><input type="radio" id="ref-puron" name="refrigerant_type" value="puron_advance">Puron Advance</label>
+          <label class="option" for="ref-unknown"><input type="radio" id="ref-unknown" name="refrigerant_type" value="unknown">Do Not Know</label>
+        </div>
+        <p class="error" data-error="refrigerant_type">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Refrigerant Type</h3>
+          <p class="learnmore__desc">Refrigerant choice can affect repair availability and long-term service costs. If you are unsure, a technician can identify it quickly.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="compressor_replaced_recently" data-conditional="cooling">
+        <legend>Has the air conditioner compressor been replaced recently?</legend>
+        <div class="options">
+          <label class="option" for="compressor-yes"><input type="radio" id="compressor-yes" name="compressor_replaced_recently" value="true">Yes</label>
+          <label class="option" for="compressor-no"><input type="radio" id="compressor-no" name="compressor_replaced_recently" value="false">No</label>
+        </div>
+        <p class="error" data-error="compressor_replaced_recently">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Compressor History</h3>
+          <p class="learnmore__desc">A newer compressor can extend system life, while an original compressor in an older system may signal higher risk of major repairs.</p>
+        </div>
+      </fieldset>
+
+      <div class="section-title" id="heating-section-title">Heating System Details</div>
+
+      <fieldset data-question="afue_bucket" data-conditional="heating">
+        <legend>What is the AFUE efficiency rating of your equipment?</legend>
+        <div class="options">
+          <label class="option" for="afue-gt90"><input type="radio" id="afue-gt90" name="afue_bucket" value="gt_90">Over 90</label>
+          <label class="option" for="afue-87-90"><input type="radio" id="afue-87-90" name="afue_bucket" value="87_90">87 - 90</label>
+          <label class="option" for="afue-80-86"><input type="radio" id="afue-80-86" name="afue_bucket" value="80_86">80 - 86</label>
+          <label class="option" for="afue-70-79"><input type="radio" id="afue-70-79" name="afue_bucket" value="70_79">70 - 79</label>
+        </div>
+        <p class="error" data-error="afue_bucket">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Annual Fuel Utilization Efficiency</h3>
+          <p class="learnmore__desc">The Annual Fuel Utilization Efficiency (AFUE) is a measure of a gas furnace's efficiency in converting fuel to energy, by projecting the average thermal efficiency for a complete heating season. A higher AFUE rating means greater energy efficiency.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="heat_exchanger_replaced_recently" data-conditional="heating">
+        <legend>Has the heat exchanger been replaced recently?</legend>
+        <div class="options">
+          <label class="option" for="exchanger-yes"><input type="radio" id="exchanger-yes" name="heat_exchanger_replaced_recently" value="true">Yes</label>
+          <label class="option" for="exchanger-no"><input type="radio" id="exchanger-no" name="heat_exchanger_replaced_recently" value="false">No</label>
+        </div>
+        <p class="error" data-error="heat_exchanger_replaced_recently">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Heat Exchanger History</h3>
+          <p class="learnmore__desc">A recently replaced heat exchanger can reduce near-term repair risk; original components in older furnaces can increase replacement considerations.</p>
+        </div>
+      </fieldset>
+
+      <div class="section-title">Performance &amp; Comfort</div>
+
+      <fieldset data-question="short_cycles_repeatedly">
+        <legend>Does your equipment turn on and off repeatedly during the day?</legend>
+        <div class="options">
+          <label class="option" for="cycles-yes"><input type="radio" id="cycles-yes" name="short_cycles_repeatedly" value="true">Yes</label>
+          <label class="option" for="cycles-no"><input type="radio" id="cycles-no" name="short_cycles_repeatedly" value="false">No</label>
+        </div>
+        <p class="error" data-error="short_cycles_repeatedly">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Short Cycling</h3>
+          <p class="learnmore__desc">Frequent on-off cycling can indicate sizing or system health issues that may affect comfort and efficiency.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="problem_rooms_never_comfortable">
+        <legend>Do you have problem rooms that seem to never get warm or cool?</legend>
+        <div class="options">
+          <label class="option" for="rooms-yes"><input type="radio" id="rooms-yes" name="problem_rooms_never_comfortable" value="true">Yes</label>
+          <label class="option" for="rooms-no"><input type="radio" id="rooms-no" name="problem_rooms_never_comfortable" value="false">No</label>
+        </div>
+        <p class="error" data-error="problem_rooms_never_comfortable">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Comfort Balance</h3>
+          <p class="learnmore__desc">Uneven temperatures can point to airflow or equipment problems that influence repair versus replacement decisions.</p>
+        </div>
+      </fieldset>
+
+      <fieldset data-question="noticeable_noise_or_vibration">
+        <legend>Is the turning on of your equipment noticeable, disturbing or causing annoying vibrations in your home?</legend>
+        <div class="options">
+          <label class="option" for="noise-yes"><input type="radio" id="noise-yes" name="noticeable_noise_or_vibration" value="true">Yes</label>
+          <label class="option" for="noise-no"><input type="radio" id="noise-no" name="noticeable_noise_or_vibration" value="false">No</label>
+        </div>
+        <p class="error" data-error="noticeable_noise_or_vibration">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Noise and Vibration</h3>
+          <p class="learnmore__desc">Unusual noise or vibration can be a sign of mechanical wear or mounting issues that may require closer inspection.</p>
+        </div>
+      </fieldset>
+
+      <div class="section-title">Residency</div>
+
+      <fieldset data-question="stay_length_bucket">
+        <legend>How long do you expect to stay in this home?</legend>
+        <div class="options">
+          <label class="option" for="stay-lt2"><input type="radio" id="stay-lt2" name="stay_length_bucket" value="lt_2">Less than 2 years</label>
+          <label class="option" for="stay-2-5"><input type="radio" id="stay-2-5" name="stay_length_bucket" value="2_5">2-5 years</label>
+          <label class="option" for="stay-6-10"><input type="radio" id="stay-6-10" name="stay_length_bucket" value="6_10">6-10 years</label>
+          <label class="option" for="stay-gt10"><input type="radio" id="stay-gt10" name="stay_length_bucket" value="gt_10">Over 10 years</label>
+        </div>
+        <p class="error" data-error="stay_length_bucket">Please select one option.</p>
+        <div class="learnmore">
+          <button type="button" class="learnmore__toggle" aria-expanded="false">
+            <span class="learnmore__icon" aria-hidden="true">+</span>
+            <span class="learnmore__text">Learn More</span>
+          </button>
+        </div>
+        <div class="learnmore__panel" hidden>
+          <h3 class="learnmore__title">Length of Residency</h3>
+          <img class="learnmore__center-img" src="/assets/length-of-residency.jpg" alt="Length of residency">
+          <p class="learnmore__desc">If you are moving within the next year or two and believe investing in a new home comfort system will improve the value of your home, you should consider making the investment. If you plan to live in your current residence for many years, it may be wise to invest in your future comfort.</p>
+        </div>
+      </fieldset>
+
+      <div class="button-row">
+        <button class="primary" type="submit">Get Recommendation</button>
+        <button class="secondary" type="button" id="reset">Start Over</button>
+      </div>
+
+      <section class="result-card" id="result" aria-live="polite" aria-atomic="true">
+        <h2 id="result-title"></h2>
+        <p class="result-body" id="result-body"></p>
+        <p class="result-meta" id="result-priority"></p>
+        <ul class="result-list" id="result-reasons"></ul>
+      </section>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('questionnaire');
+    const resultCard = document.getElementById('result');
+    const resultTitle = document.getElementById('result-title');
+    const resultBody = document.getElementById('result-body');
+    const resultPriority = document.getElementById('result-priority');
+    const resultReasons = document.getElementById('result-reasons');
+    const resetButton = document.getElementById('reset');
+    const coolingSectionTitle = document.getElementById('cooling-section-title');
+    const heatingSectionTitle = document.getElementById('heating-section-title');
+
+    const repairCostEstimates = {
+      lt_100: 75,
+      100_500: 300,
+      501_1000: 750,
+      gt_1000: 1500
+    };
+
+    const questionFields = Array.from(form.querySelectorAll('fieldset[data-question]'));
+    const learnMoreToggles = Array.from(form.querySelectorAll('.learnmore__toggle'));
+
+    const conditionalGroups = {
+      cooling: () => ['ac_heat_pump', 'packaged_unit'].includes(getValue('system_type')),
+      heating: () => getValue('system_type') === 'furnace_boiler'
+    };
+
+    function getValue(name) {
+      const checked = form.querySelector(`input[name="${name}"]:checked`);
+      if (!checked) {
+        return null;
+      }
+      if (checked.value === 'true') {
+        return true;
+      }
+      if (checked.value === 'false') {
+        return false;
+      }
+      return checked.value;
+    }
+
+    function updateConditionalVisibility() {
+      const systemType = getValue('system_type');
+      const showCooling = ['ac_heat_pump', 'packaged_unit'].includes(systemType);
+      const showHeating = systemType === 'furnace_boiler';
+
+      coolingSectionTitle.classList.toggle('hidden', !showCooling);
+      heatingSectionTitle.classList.toggle('hidden', !showHeating);
+
+      questionFields.forEach((fieldset) => {
+        const condition = fieldset.dataset.conditional;
+        if (!condition) {
+          return;
+        }
+        const shouldShow = conditionalGroups[condition]();
+        fieldset.classList.toggle('hidden', !shouldShow);
+        if (!shouldShow) {
+          fieldset.querySelectorAll('input[type="radio"]').forEach((input) => {
+            input.checked = false;
+          });
+          hideError(fieldset.dataset.question);
+        }
+      });
+    }
+
+    function showError(questionName) {
+      const error = form.querySelector(`[data-error="${questionName}"]`);
+      if (error) {
+        error.classList.add('show');
+      }
+    }
+
+    function hideError(questionName) {
+      const error = form.querySelector(`[data-error="${questionName}"]`);
+      if (error) {
+        error.classList.remove('show');
+      }
+    }
+
+    function isVisible(fieldset) {
+      return !fieldset.classList.contains('hidden');
+    }
+
+    function validateForm() {
+      let isValid = true;
+      questionFields.forEach((fieldset) => {
+        if (!isVisible(fieldset)) {
+          return;
+        }
+        const questionName = fieldset.dataset.question;
+        const selected = form.querySelector(`input[name="${questionName}"]:checked`);
+        if (!selected) {
+          isValid = false;
+          showError(questionName);
+        } else {
+          hideError(questionName);
+        }
+      });
+      return isValid;
+    }
+
+    function computeDerivedValues(data) {
+      const comfortIssueCount = [
+        data.short_cycles_repeatedly,
+        data.problem_rooms_never_comfortable,
+        data.noticeable_noise_or_vibration
+      ].filter(Boolean).length;
+
+      const lowEfficiencyFlag = (
+        ['ac_heat_pump', 'packaged_unit'].includes(data.system_type) &&
+        ['5_7', '8_10'].includes(data.seer_bucket)
+      ) || (
+        data.system_type === 'furnace_boiler' &&
+        data.afue_bucket === '70_79'
+      );
+
+      const majorComponentOriginalFlag = (
+        ['ac_heat_pump', 'packaged_unit'].includes(data.system_type) &&
+        data.compressor_replaced_recently === false
+      ) || (
+        data.system_type === 'furnace_boiler' &&
+        data.heat_exchanger_replaced_recently === false
+      );
+
+      const repairCostEstimate = repairCostEstimates[data.repair_cost_bucket] || 0;
+      const replacementCostEstimate = null;
+      let repairOver30PercentFlag = false;
+
+      if (replacementCostEstimate) {
+        repairOver30PercentFlag = repairCostEstimate > 0.3 * replacementCostEstimate;
+      } else {
+        repairOver30PercentFlag = data.repair_cost_bucket === 'gt_1000';
+      }
+
+      return {
+        comfortIssueCount,
+        lowEfficiencyFlag,
+        majorComponentOriginalFlag,
+        repairOver30PercentFlag
+      };
+    }
+
+    function evaluateRules(data) {
+      const derived = computeDerivedValues(data);
+      const triggered = [];
+      let stop = false;
+
+      const addRule = (recommendation, priority, reason) => {
+        triggered.push({ recommendation, priority, reason });
+      };
+
+      if (data.equipment_age_years_bucket === 'gt_20') {
+        addRule('replace', 'high', 'Equipment is over 20 years old; end-of-life risk and inefficiency are high.');
+        stop = true;
+      }
+
+      if (!stop && data.repair_cost_bucket === 'gt_1000') {
+        addRule('replace', 'high', 'Repair cost exceeds $1,000; large repairs often indicate replacement is more cost-effective.');
+        stop = true;
+      }
+
+      if (!stop && derived.repairOver30PercentFlag) {
+        addRule('replace', 'high', 'Repair cost exceeds 30% of replacement cost; funds are better invested in a new system.');
+        stop = true;
+      }
+
+      if (!stop && derived.lowEfficiencyFlag) {
+        addRule('replace', 'medium', 'Efficiency rating is low (SEER/AFUE); replacement can reduce energy costs and improve comfort.');
+      }
+
+      if (!stop && derived.comfortIssueCount >= 2) {
+        addRule('replace', 'medium', 'Multiple comfort/performance issues suggest broader system problems; replacement is often more reliable.');
+      }
+
+      if (!stop && ['11_20', 'gt_20'].includes(data.equipment_age_years_bucket) && derived.majorComponentOriginalFlag) {
+        addRule('replace', 'medium', 'Older system with original major component (compressor/heat exchanger) increases risk of high future repairs.');
+      }
+
+      if (!stop) {
+        const efficiencyOk = (
+          ['ac_heat_pump', 'packaged_unit'].includes(data.system_type) &&
+          ['ge_14', '11_13'].includes(data.seer_bucket)
+        ) || (
+          data.system_type === 'furnace_boiler' &&
+          ['gt_90', '87_90'].includes(data.afue_bucket)
+        );
+
+        if (
+          ['lt_6', '6_10'].includes(data.equipment_age_years_bucket) &&
+          ['lt_100', '100_500'].includes(data.repair_cost_bucket) &&
+          data.under_warranty === true &&
+          efficiencyOk &&
+          derived.comfortIssueCount === 0
+        ) {
+          addRule('repair', 'low', 'System is relatively new, repair cost is low, warranty coverage exists, efficiency is acceptable, and there are no major comfort issues.');
+        }
+      }
+
+      if (!stop) {
+        if (
+          ['6_10', 'gt_10'].includes(data.stay_length_bucket) &&
+          (derived.lowEfficiencyFlag || derived.comfortIssueCount >= 1 || data.equipment_age_years_bucket === '11_20')
+        ) {
+          addRule('replace', 'medium', 'Long expected residency increases the value of efficiency and reliability from replacement.');
+        }
+      }
+
+      if (!stop) {
+        if (
+          data.stay_length_bucket === 'lt_2' &&
+          ['lt_6', '6_10', '11_20'].includes(data.equipment_age_years_bucket) &&
+          ['lt_100', '100_500', '501_1000'].includes(data.repair_cost_bucket) &&
+          derived.comfortIssueCount < 2
+        ) {
+          addRule('repair', 'medium', 'Short expected residency can favor repair if the system is not severely failing and repair cost is moderate.');
+        }
+      }
+
+      let recommendation = null;
+      let priority = 'low';
+
+      if (stop) {
+        recommendation = triggered[0].recommendation;
+      } else {
+        if (triggered.some((rule) => rule.recommendation === 'replace')) {
+          recommendation = 'replace';
+        } else if (triggered.some((rule) => rule.recommendation === 'repair')) {
+          recommendation = 'repair';
+        }
+      }
+
+      if (!recommendation) {
+        recommendation = 'professional_evaluation';
+        triggered.push({
+          recommendation: 'professional_evaluation',
+          priority: 'medium',
+          reason: 'Answers indicate mixed factors; a professional evaluation is recommended to confirm the most cost-effective option.'
+        });
+      }
+
+      if (triggered.some((rule) => rule.priority === 'high')) {
+        priority = 'high';
+      } else if (triggered.some((rule) => rule.priority === 'medium')) {
+        priority = 'medium';
+      }
+
+      const reasons = Array.from(new Set(triggered.map((rule) => rule.reason)));
+
+      return { recommendation, priority, reasons };
+    }
+
+    function gatherFormData() {
+      return {
+        system_type: getValue('system_type'),
+        equipment_age_years_bucket: getValue('equipment_age_years_bucket'),
+        repair_cost_bucket: getValue('repair_cost_bucket'),
+        under_warranty: getValue('under_warranty'),
+        seer_bucket: getValue('seer_bucket'),
+        refrigerant_type: getValue('refrigerant_type'),
+        compressor_replaced_recently: getValue('compressor_replaced_recently'),
+        afue_bucket: getValue('afue_bucket'),
+        heat_exchanger_replaced_recently: getValue('heat_exchanger_replaced_recently'),
+        short_cycles_repeatedly: getValue('short_cycles_repeatedly'),
+        problem_rooms_never_comfortable: getValue('problem_rooms_never_comfortable'),
+        noticeable_noise_or_vibration: getValue('noticeable_noise_or_vibration'),
+        stay_length_bucket: getValue('stay_length_bucket')
+      };
+    }
+
+    function renderResult(result) {
+      const titles = {
+        replace: 'Replacement Recommended',
+        repair: 'Repair Recommended',
+        professional_evaluation: 'Professional Evaluation Recommended'
+      };
+
+      const bodies = {
+        replace: 'Based on your answers, replacing your system is likely the better long-term investment.',
+        repair: 'Based on your answers, repairing your existing system is likely a reasonable option.',
+        professional_evaluation: 'Your answers indicate mixed factors. An in-person evaluation is recommended to confirm the most cost-effective option.'
+      };
+
+      const priorities = {
+        high: 'High',
+        medium: 'Medium',
+        low: 'Low'
+      };
+
+      resultTitle.textContent = titles[result.recommendation];
+      resultBody.textContent = bodies[result.recommendation];
+      resultPriority.textContent = `Priority: ${priorities[result.priority]}`;
+      resultReasons.innerHTML = '';
+
+      result.reasons.forEach((reason) => {
+        const item = document.createElement('li');
+        item.textContent = reason;
+        resultReasons.appendChild(item);
+      });
+
+      resultCard.classList.add('show');
+      resultCard.style.borderColor = result.recommendation === 'repair' ? 'var(--success)' : 'var(--accent)';
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function setLearnMoreState(toggle, panel, expanded) {
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      panel.hidden = !expanded;
+      const icon = toggle.querySelector('.learnmore__icon');
+      if (icon) {
+        icon.textContent = expanded ? '-' : '+';
+      }
+    }
+
+    learnMoreToggles.forEach((toggle) => {
+      const fieldset = toggle.closest('fieldset');
+      const panel = fieldset ? fieldset.querySelector('.learnmore__panel') : null;
+      if (!panel) {
+        return;
+      }
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        setLearnMoreState(toggle, panel, !expanded);
+      });
+    });
+
+    form.addEventListener('change', (event) => {
+      if (event.target && event.target.name === 'system_type') {
+        updateConditionalVisibility();
+      }
+      if (event.target && event.target.name) {
+        hideError(event.target.name);
+      }
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      updateConditionalVisibility();
+
+      if (!validateForm()) {
+        return;
+      }
+
+      const data = gatherFormData();
+      const result = evaluateRules(data);
+      renderResult(result);
+    });
+
+    resetButton.addEventListener('click', () => {
+      form.reset();
+      resultCard.classList.remove('show');
+      resultTitle.textContent = '';
+      resultBody.textContent = '';
+      resultPriority.textContent = '';
+      resultReasons.innerHTML = '';
+      questionFields.forEach((fieldset) => hideError(fieldset.dataset.question));
+      learnMoreToggles.forEach((toggle) => {
+        const fieldset = toggle.closest('fieldset');
+        const panel = fieldset ? fieldset.querySelector('.learnmore__panel') : null;
+        if (panel) {
+          setLearnMoreState(toggle, panel, false);
+        }
+      });
+      updateConditionalVisibility();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    updateConditionalVisibility();
+  </script>
+</body>
+</html>
